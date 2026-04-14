@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+// @ts-ignore
 import { YoutubeTranscript } from '../../../node_modules/youtube-transcript/dist/youtube-transcript.esm.js';
 
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
