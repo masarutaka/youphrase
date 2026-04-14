@@ -101,6 +101,9 @@ export async function GET(req: NextRequest) {
   if (!phrase) {
     return NextResponse.json({ error: 'phrase is required' }, { status: 400 });
   }
+  if (!YOUTUBE_API_KEY) {
+    return NextResponse.json({ error: 'API key not set', hits: [] });
+  }
 
   const regionParam = accent ? `&regionCode=${accent.toUpperCase()}` : '';
   const accentKeyword = accent ? ACCENT_KEYWORDS[accent] : null;
