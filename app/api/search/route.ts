@@ -104,6 +104,12 @@ export async function GET(req: NextRequest) {
   if (!YOUTUBE_API_KEY) {
     return NextResponse.json({ error: 'API key not set', hits: [] });
   }
+  // DEBUG
+  const debugRes = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(phrase)}&type=video&videoCaption=closedCaption&maxResults=1&key=${YOUTUBE_API_KEY}`);
+  const debugData = await debugRes.json();
+  if (debugData.error || !debugData.items?.length) {
+    return NextResponse.json({ error: 'YouTube API failed', detail: debugData.error ?? 'no items', hits: [] });
+  }
 
   const regionParam = accent ? `&regionCode=${accent.toUpperCase()}` : '';
   const accentKeyword = accent ? ACCENT_KEYWORDS[accent] : null;
