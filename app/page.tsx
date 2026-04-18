@@ -167,8 +167,15 @@ export default function Home() {
     const res = await fetch(`/api/search?phrase=${encodeURIComponent(target)}${accentParam}`);
     const data = await res.json();
     if (data.error) {
-      console.error('API error:', data.error);
-      alert(`検索エラー: ${data.error}`);
+      const isExpectedMissingApiKey =
+        data.error === 'API key not set' &&
+        (data.source === 'none' || data.source === 'live-disabled' || data.source === 'stale-cache');
+      if (isExpectedMissingApiKey) {
+        console.warn('Search fallback active:', data.error, data.source);
+      } else {
+        console.error('API error:', data.error);
+        alert(`検索エラー: ${data.error}`);
+      }
     }
     const newHits: Hit[] = data.hits ?? [];
     setHits(newHits);
