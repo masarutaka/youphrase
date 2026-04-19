@@ -1,8 +1,1 @@
-{
-  "crons": [
-    {
-      "path": "/api/ingest?limit=15",
-      "schedule": "*/10 * * * *"
-    }
-  ]
-}
+{"crons":[{"path":"/api/ingest?limit=15","schedule":"0 0 * * *"}]}
